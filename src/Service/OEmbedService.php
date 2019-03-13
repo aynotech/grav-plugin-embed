@@ -44,6 +44,8 @@ class OEmbedService implements ServiceInterface
 		$cache = static::getGrav()['cache'];
 		$cache_key = 'gertt_embed_' . md5($url);
 		$embed = $cache->fetch($cache_key);
+		$assets = static::getGrav()['assets'];
+		$twig = static::getGrav()['twig'];
 
 		if ($embed === false) {
 			$URI = $this->endpoint . (strstr($this->endpoint, '?') !== false ? '&' : '?') . 'url=' . urlencode($url);
@@ -64,7 +66,12 @@ class OEmbedService implements ServiceInterface
 	        curl_close($curl);
 
 	        if (!$response || !($response = json_decode($response, true)) || empty($response['html'])) {
-	        	return false;
+	        	if(empty($response['html']) && !empty($response['title'])){
+	        		$response['truncate_length'] = static::getGrav()['config']->get('plugins.embed.truncate_length');;
+	        		$response['html'] = $twig->processTemplate('partials/preview.html.twig', $response);
+	        	}else{
+	        		return false;
+	        	}
 	        }
 
 	        $embed = $response['html'];
