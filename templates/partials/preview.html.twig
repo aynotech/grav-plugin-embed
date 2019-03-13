@@ -4,6 +4,8 @@
   {% else %}
   <a href="{{url}}" target="_blank"><img src="{{ url("plugin://embed/assets/image/default.png") }}" /></a>
   {% endif %}
-  <a href="{{url}}" target="_blank"><h3>{{title}}</h3></a>
-  <p>{{description|truncate(truncate_length, true)}}</p>
+  <div class="link-info">
+    <h3><a href="{{url}}" target="_blank">{{title}}</a></h3>
+    <p>{{description|truncate(truncate_length, true)}}</p>
+  </div>
 </div>
