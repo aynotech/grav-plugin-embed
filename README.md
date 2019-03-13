@@ -1,4 +1,4 @@
-# Forked for support any link preview
+# Forked to support any link preview
 
 Even links without providers. If the endpoint doesn't return any result, this plugin will use link title and description for creating a preview.
 
